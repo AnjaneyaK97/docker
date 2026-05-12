@@ -10,7 +10,7 @@ pipeline{
          sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG'
       }
     }
-    stage('Login with credentials'){
+    stage("Login with credentials"){
           withCredentials([usernamePassword(
             credentialId:'dockerhub-credentials',
             userVariable:'USER',
@@ -20,12 +20,12 @@ pipeline{
         sh 'echo $USER | docker login -u $USER --$PASS-stdin'
       }
     }  
-    stage('push the image'){
+    stage("push the image"){
       steps{
         sh'docker push $DOCKER_IMAGE:$DOCKER_TAG'
       }
     }
-    stage('deploy the image'){
+    stage("deploy the image"){
       steps{
         sh '''
       docker s top myapp-container || true
